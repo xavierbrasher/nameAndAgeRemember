@@ -1,0 +1,2 @@
+namesOfPeople = []
+agesOfPeople = []
