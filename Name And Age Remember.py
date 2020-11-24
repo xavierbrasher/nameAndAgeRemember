@@ -35,7 +35,7 @@ def newPerson():
 
 def listPeople():
     for x in range(len(namesOfPeople)):
-        print("Name: " + namesOfPeople[x] + ". Age: " + agesOfPeople[x] + ".")
+        print(str(x+1)+". Name: " + namesOfPeople[x] + ". Age: " + agesOfPeople[x] + ".")
 
 
 def removePerson():
