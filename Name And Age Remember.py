@@ -26,10 +26,17 @@ def newPerson():
         print('Canceled')
         clear()
     else:
-        namesOfPeople.append(newName)
 
-        newAge = input("Whats Your Age: ")
-        agesOfPeople.append(newAge)
+        newAge = input("Whats Your Birth date (DD/MM/YYYY): ")
+
+        if len(newAge) == 10 and "/" in newAge:
+            agesOfPeople.append(newAge)
+            namesOfPeople.append(newName)
+        else:
+            print("Error. Retry")
+            t.sleep(2)
+            clear()
+            newPerson()
         clear()
 
 
@@ -67,6 +74,7 @@ def removePerson():
 
 
 while quit:
+
     clear()
     print("Welcome To The Name and Age Remember")
     print("Type n To put someone in")
