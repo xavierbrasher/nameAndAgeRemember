@@ -1,18 +1,52 @@
 import os
 import time as t
 from savedData import *
+from datetime import date, datetime
 age = ""
 quit = True
-
+newBirthday = ""
 
 def clear():
     os.system('cls')
 
+def findOutAge():
+    for i in range(len(birthdaysOfPeople)):
+        for x in birthdaysOfPeople:
+            if x == "/":
+                newBirthday += " "
+            else:
+                newBirthday += x
+        print(newBirthday)
+
+        day = ""
+        month = ""
+        year = ""
+        for x in range(len(newBirthday)):
+            if x <= 2:
+                day += newBirthday[x]
+            elif x == 4:
+                month += newBirthday[x]
+            elif x == 5:
+                month += newBirthday[x]
+            elif x >= 6:
+                year += newBirthday[x]
+        print(day)
+        print(month)
+        print(year)
+    
+        birthDate = datetime.datetime(year, month, day)
+        today = date.today() 
+        age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day)) 
+        agesOfPeople.append(age)
+        save()
+
+    
 
 
 def save():
     f = open("savedData.py", "w")
     f.write("namesOfPeople = "+ str(namesOfPeople) + "\n")
+    f.write("birthdaysOfPeople = "+ str(birthdaysOfPeople) + "\n")
     f.write("agesOfPeople = "+ str(agesOfPeople) + "\n")
     f.close
 
@@ -30,8 +64,9 @@ def newPerson():
         newAge = input("Whats Your Birth date (DD/MM/YYYY): ")
 
         if len(newAge) == 10 and "/" in newAge:
-            agesOfPeople.append(newAge)
+            birthdaysOfPeople.append(newAge)
             namesOfPeople.append(newName)
+            findOutAge()
         else:
             print("Error. Retry")
             t.sleep(2)
@@ -40,9 +75,10 @@ def newPerson():
         clear()
 
 
+
 def listPeople():
     for x in range(len(namesOfPeople)):
-        print(str(x+1)+". Name: " + namesOfPeople[x] + ". Age: " + agesOfPeople[x] + ".")
+        print(str(x+1)+". Name: " + namesOfPeople[x] + ". Age: " + birthdaysOfPeople[x] + ".")
 
 
 def removePerson():
@@ -61,7 +97,7 @@ def removePerson():
             try:
                 newIndex = int(index)-1
                 namesOfPeople.remove(namesOfPeople[newIndex])
-                agesOfPeople.remove(agesOfPeople[newIndex])
+                birthdaysOfPeople.remove(birthdaysOfPeople[newIndex])
                 done = True
             except:
                 if index == "c" or index == "C":
