@@ -1,4 +1,5 @@
 from datetime import date
+import datetime
 
 birthday = input()
 newBirthday = ""
@@ -27,10 +28,10 @@ print(month)
 print(year)
 
 datetdy = date.today().strftime("%d/%m/%Y")
-birthDate = datetime.datetime(year, month, day)
-def calculateAge(birthDate): 
+birthDate = datetime.datetime(int(year), int(month), int(day))
+def calculateAge(birthDateCalculation): 
     today = date.today() 
-    age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day)) 
+    age = today.year - birthDateCalculation.year - ((today.month, today.day) < (birthDateCalculation.month, birthDateCalculation.day)) 
     return age 
 
-print(calculateAge(birthday))
+print(calculateAge(birthDate))
