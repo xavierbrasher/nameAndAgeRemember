@@ -1,47 +1,43 @@
+def makeFileUsable():
+    try:
+        t = open("savedData.py", "r")
+        contents = t.read()
+        print(contents)
+        input()
+        if contents.__contains__("namesOfPeople ="):
+            print("true")
+            input()
+            t.close
+        else:
+            t.close
+            print("false")
+            input()
+            f = open("savedData.py", "w")
+            f.write("namesOfPeople = []" + "\n")
+            f.write("birthdaysOfPeople = []" + "\n")
+            f.write("agesOfPeople = []" + "\n")
+            f.close
+    except:
+        f = open("savedData.py", "w")
+        f.write("namesOfPeople = []" + "\n")
+        f.write("birthdaysOfPeople = []" + "\n")
+        f.write("agesOfPeople = []" + "\n")
+        f.close
+makeFileUsable()
+
 import os
 import time as t
+os.system('cls')
+print("Loading...")
+t.sleep(2)
+os.system('cls')
 from savedData import *
 from datetime import date, datetime
+import datetime
+
 age = ""
 quit = True
 newBirthday = ""
-
-def clear():
-    os.system('cls')
-
-def findOutAge():
-    for i in range(len(birthdaysOfPeople)):
-        for x in birthdaysOfPeople:
-            if x == "/":
-                newBirthday += " "
-            else:
-                newBirthday += x
-        print(newBirthday)
-
-        day = ""
-        month = ""
-        year = ""
-        for x in range(len(newBirthday)):
-            if x <= 2:
-                day += newBirthday[x]
-            elif x == 4:
-                month += newBirthday[x]
-            elif x == 5:
-                month += newBirthday[x]
-            elif x >= 6:
-                year += newBirthday[x]
-        print(day)
-        print(month)
-        print(year)
-    
-        birthDate = datetime.datetime(year, month, day)
-        today = date.today() 
-        age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day)) 
-        agesOfPeople.append(age)
-        save()
-
-    
-
 
 def save():
     f = open("savedData.py", "w")
@@ -49,6 +45,81 @@ def save():
     f.write("birthdaysOfPeople = "+ str(birthdaysOfPeople) + "\n")
     f.write("agesOfPeople = "+ str(agesOfPeople) + "\n")
     f.close
+def clear():
+    os.system('cls')
+
+
+
+def makeMath(birthDateCalculation):
+    today = date.today() 
+    age = today.year - birthDateCalculation.year - ((today.month, today.day) < (birthDateCalculation.month, birthDateCalculation.day)) 
+    return age 
+    
+def calculateAge(birthdaydate, newName):
+    newBirthday = ""
+    newBirthday = ""
+    for x in birthdaydate:
+        if x == "/":
+            newBirthday += " "
+        else:
+            newBirthday += x
+    print(newBirthday)
+    day = ""
+    month = ""
+    year = ""
+    for x in range(len(newBirthday)):
+        if x <= 2:
+            day += newBirthday[x]
+        elif x == 4:
+                month += newBirthday[x]
+                month += newBirthday[x + 1]
+        elif x >= 6:
+            year += newBirthday[x]
+    print(day)
+    print(month)
+    print(year)
+    birthDate = datetime.datetime(int(year), int(month), int(day))
+    ageCalculationEnd = str(makeMath(birthDate))
+    print(ageCalculationEnd)
+    print("Is this your correct birthday? " + ageCalculationEnd + " Answer with y or n")
+    checkageloop = True
+    while checkageloop:
+        checkBirthday = input()
+        checkBirthday.lower()
+        if checkBirthday == "y":
+            print("Cool")
+            t.sleep(1)
+            agesOfPeople.append(ageCalculationEnd)
+            namesOfPeople.append(newName)
+            birthdaysOfPeople.append(birthdaydate)
+            save()
+            checkageloop = False
+        elif checkBirthday == "Y":
+            print("Cool")
+            t.sleep(1)
+            agesOfPeople.append(ageCalculationEnd)
+            namesOfPeople.append(newName)
+            birthdaysOfPeople.append(birthdaydate)
+            save()
+            checkageloop = False
+        elif checkBirthday == "n":
+            clear()
+            print("damn it")
+            t.sleep(1)
+            checkageloop = False
+        elif checkBirthday == "N":
+            clear()
+            print("damn it")
+            t.sleep(1)
+            checkageloop = False
+
+
+
+
+
+            
+
+
 
 
 
@@ -64,9 +135,7 @@ def newPerson():
         newAge = input("Whats Your Birth date (DD/MM/YYYY): ")
 
         if len(newAge) == 10 and "/" in newAge:
-            birthdaysOfPeople.append(newAge)
-            namesOfPeople.append(newName)
-            findOutAge()
+            calculateAge(newAge, newName)
         else:
             print("Error. Retry")
             t.sleep(2)
@@ -78,7 +147,8 @@ def newPerson():
 
 def listPeople():
     for x in range(len(namesOfPeople)):
-        print(str(x+1)+". Name: " + namesOfPeople[x] + ". Age: " + birthdaysOfPeople[x] + ".")
+        print(str(x+1)+". Name: " + namesOfPeople[x] + ". Age: " + agesOfPeople[x] + ".")
+
 
 
 def removePerson():
@@ -98,6 +168,7 @@ def removePerson():
                 newIndex = int(index)-1
                 namesOfPeople.remove(namesOfPeople[newIndex])
                 birthdaysOfPeople.remove(birthdaysOfPeople[newIndex])
+                agesOfPeople.remove(agesOfPeople[newIndex])
                 done = True
             except:
                 if index == "c" or index == "C":
@@ -110,7 +181,6 @@ def removePerson():
 
 
 while quit:
-
     clear()
     print("Welcome To The Name and Age Remember")
     print("Type n To put someone in")
@@ -123,10 +193,10 @@ while quit:
         save()
         print("Goodbye")
         quit = False
+        exit()
     elif decision == "n" or decision == "N":
         clear()
         newPerson()
-        save()
     elif decision == "r" or decision == "R":
         clear()
         removePerson()
@@ -140,5 +210,4 @@ while quit:
         save()
         clear()
     else:
-        save()
         clear()
