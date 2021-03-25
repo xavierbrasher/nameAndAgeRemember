@@ -21,10 +21,15 @@ makeFileUsable()
 
 import os
 import time as t
-os.system('cls')
+def clear():
+    try:
+        os.system('cls')
+    except:
+        os.system('clear')
+clear()
 print("Loading...")
-t.sleep(2)
-os.system('cls')
+t.sleep(1)
+clear()
 from savedData import *
 from datetime import date, datetime
 import datetime
@@ -39,8 +44,6 @@ def save():
     f.write("birthdaysOfPeople = "+ str(birthdaysOfPeople) + "\n")
     f.write("agesOfPeople = "+ str(agesOfPeople) + "\n")
     f.close
-def clear():
-    os.system('cls')
 
 
 
@@ -112,16 +115,6 @@ def calculateAge(birthdaydate, newName):
             t.sleep(1)
 
 
-
-
-
-            
-
-
-
-
-
-
 def newPerson():
     print("Type c as name if you want to cancel")
     newName = input("What is the Name: ")
@@ -146,8 +139,6 @@ def newPerson():
 def listPeople():
     for x in range(len(namesOfPeople)):
         print(str(x+1)+". Name: " + namesOfPeople[x] + ". Age: " + agesOfPeople[x] + ".")
-
-
 
 def removePerson():
     done = False
@@ -179,6 +170,7 @@ def removePerson():
 
 def refreshAges():
     for i in birthdaysOfPeople:
+        newBirthday = ""
         for x in i:
             if x == "/":
                 newBirthday += " "
@@ -197,17 +189,21 @@ def refreshAges():
                 year += newBirthday[x]
         birthDate = datetime.datetime(int(year), int(month), int(day))
         ageCalculationEnd = str(makeMath(birthDate))
-        
+        indexInAges = birthdaysOfPeople.index(i)
+        agesOfPeople[indexInAges] = ageCalculationEnd
+        save()
         clear()
 
 
 while quit:
     clear()
+    refreshAges()
     print("Welcome To The Name and Age Remember")
     print("Type n To put someone in")
     print("Type l to list the names")
     print("Type r to remove a name")
-    print("Type h Hack into the mainframe")
+    print("Type h to hack into the mainframe")
+    print("Type f to refresh the ages")
     print("Type q to quit")
     decision = input("")
     if decision == "q" or decision == "Q":
@@ -231,6 +227,10 @@ while quit:
         input()
         save()
         clear()
+    elif decision == "f" or decision == "F":
+        clear()
+        refreshAges()
+        save()
     elif decision == "h" or decision == "H":
         print(os.system("c: & tree"))
         t.sleep(1)
