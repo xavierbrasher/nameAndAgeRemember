@@ -32,6 +32,7 @@ clear()
 print("Loading...")
 t.sleep(1)
 clear()
+from sys import platform
 from savedData import *
 from datetime import date, datetime
 import datetime
@@ -241,10 +242,13 @@ while quit:
     elif decision == "h" or decision == "H":
         print('\033[92m')
         clear()
-        try:
-            print(os.system("c: & tree"))
-        except Exception:
+        if platform == "linux" or platform == "linux2":
             print(os.system("cd / & tree"))
+        elif platform == "darwin":
+            print(os.system("cd / & tree"))
+        elif platform == "win32":
+            print(os.system("c: & tree"))
+
         t.sleep(1)
     else:
         clear()
