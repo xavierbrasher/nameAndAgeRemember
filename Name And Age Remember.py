@@ -199,6 +199,7 @@ def refreshAges():
 
 while quit:
     clear()
+    print('\033[94m')
     refreshAges()
     clear()
     print("Welcome To The Name and Age Remember")
