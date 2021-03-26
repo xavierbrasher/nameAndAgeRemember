@@ -11,7 +11,7 @@ def makeFileUsable():
             f.write("birthdaysOfPeople = []" + "\n")
             f.write("agesOfPeople = []" + "\n")
             f.close
-    except:
+    except Exception:
         f = open("savedData.py", "w")
         f.write("namesOfPeople = []" + "\n")
         f.write("birthdaysOfPeople = []" + "\n")
@@ -21,11 +21,13 @@ makeFileUsable()
 
 import os
 import time as t
+from subprocess import check_call, check_output, call 
 def clear():
     try:
         os.system('cls')
-    except:
+    except Exception:
         os.system('clear')
+print('\033[94m')
 clear()
 print("Loading...")
 t.sleep(1)
@@ -159,7 +161,7 @@ def removePerson():
                 birthdaysOfPeople.remove(birthdaysOfPeople[newIndex])
                 agesOfPeople.remove(agesOfPeople[newIndex])
                 done = True
-            except:
+            except Exception:
                 if index == "c" or index == "C":
                     print("Ok. Cancelling.....")
                     done = True
@@ -198,6 +200,7 @@ def refreshAges():
 while quit:
     clear()
     refreshAges()
+    clear()
     print("Welcome To The Name and Age Remember")
     print("Type n To put someone in")
     print("Type l to list the names")
@@ -209,6 +212,9 @@ while quit:
     if decision == "q" or decision == "Q":
         clear()
         save()
+        print('\033[99m' + "1")
+        input
+        clear()
         print("Goodbye")
         quit = False
         exit()
@@ -232,6 +238,8 @@ while quit:
         refreshAges()
         save()
     elif decision == "h" or decision == "H":
+        print('\033[92m')
+        clear()
         print(os.system("c: & tree"))
         t.sleep(1)
     else:
