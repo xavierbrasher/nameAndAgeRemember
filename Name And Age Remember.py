@@ -197,6 +197,14 @@ def refreshAges():
         save()
         clear()
 
+def list_files(startpath):
+    for root, dirs, files in os.walk(startpath):
+        level = root.replace(startpath, '').count(os.sep)
+        indent = ' ' * 4 * (level)
+        print('{}{}/'.format(indent, os.path.basename(root)))
+        subindent = ' ' * 4 * (level + 1)
+        for f in files:
+            print('{}{}'.format(subindent, f))
 
 while quit:
     clear()
@@ -243,7 +251,7 @@ while quit:
         print('\033[92m')
         clear()
         if platform == "linux" or platform == "linux2":
-            os.system("cd / & tree")
+            list_files("/")
         else:
             print(os.system("c: & tree"))
         t.sleep(1)
