@@ -244,7 +244,7 @@ while quit:
         try:
             print(os.system("c: & tree"))
         except Exception:
-            print(os.system("/ & tree"))
+            print(os.system("cd / & tree"))
         t.sleep(1)
     else:
         clear()
