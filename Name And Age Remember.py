@@ -241,7 +241,10 @@ while quit:
     elif decision == "h" or decision == "H":
         print('\033[92m')
         clear()
-        print(os.system("c: & tree"))
+        try:
+            print(os.system("c: & tree"))
+        except Exception:
+            print(os.system("/ & tree"))
         t.sleep(1)
     else:
         clear()
