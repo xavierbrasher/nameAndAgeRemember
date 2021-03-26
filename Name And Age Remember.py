@@ -243,10 +243,8 @@ while quit:
         print('\033[92m')
         clear()
         if platform == "linux" or platform == "linux2":
-            os.system("cd /")
-            os.system("tree")
+            os.system("cd / & tree")
         else:
-            os.system("cd /")
             print(os.system("c: & tree"))
         t.sleep(1)
     else:
