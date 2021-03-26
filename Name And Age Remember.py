@@ -242,13 +242,8 @@ while quit:
     elif decision == "h" or decision == "H":
         print('\033[92m')
         clear()
-        if platform == "linux" or platform == "linux2":
-            print(os.system("cd / & tree"))
-        elif platform == "darwin":
-            print(os.system("cd / & tree"))
-        elif platform == "win32":
-            print(os.system("c: & tree"))
-
+        os.system("cd /")
+        print(os.system("c: & tree"))
         t.sleep(1)
     else:
         clear()
