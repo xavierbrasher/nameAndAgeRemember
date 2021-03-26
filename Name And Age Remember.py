@@ -252,6 +252,8 @@ while quit:
         clear()
         if platform == "linux" or platform == "linux2":
             list_files("/")
+        elif platform == "darwin":
+            list_files("/")
         else:
             print(os.system("c: & tree"))
         t.sleep(1)
