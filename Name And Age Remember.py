@@ -215,7 +215,7 @@ while quit:
     print("Type n To put someone in")
     print("Type l to list the names")
     print("Type r to remove a name")
-    print("Type h to hack into the mainframe")
+    print("Type h to hack into the mainframe (Do control-c to stop it)")
     print("Type f to refresh the ages")
     print("Type q to quit")
     decision = input("")
@@ -248,14 +248,20 @@ while quit:
         refreshAges()
         save()
     elif decision == "h" or decision == "H":
-        print('\033[92m')
-        clear()
-        if platform == "linux" or platform == "linux2":
-            list_files("/")
-        elif platform == "darwin":
-            list_files("/")
-        else:
-            print(os.system("c: & tree"))
-        t.sleep(1)
+        try:
+            print('\033[92m')
+            clear()
+            if platform == "linux" or platform == "linux2":
+                list_files("/")
+            elif platform == "darwin":
+                list_files("/")
+            else:
+                print(os.system("c: & tree"))
+            t.sleep(1)
+        except:
+            clear()
+            print('\033[94m')
+            print("HAHA fine it will stop")
+            t.sleep(2)
     else:
         clear()
