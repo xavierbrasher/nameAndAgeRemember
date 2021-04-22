@@ -11,7 +11,7 @@ def makeFileUsable():
             f.write("birthdaysOfPeople = []" + "\n")
             f.write("agesOfPeople = []" + "\n")
             f.close
-    except:
+    except Exception:
         f = open("savedData.py", "w")
         f.write("namesOfPeople = []" + "\n")
         f.write("birthdaysOfPeople = []" + "\n")
@@ -21,15 +21,18 @@ makeFileUsable()
 
 import os
 import time as t
+from subprocess import check_call, check_output, call 
 def clear():
     try:
         os.system('cls')
-    except:
+    except Exception:
         os.system('clear')
+print('\033[94m')
 clear()
 print("Loading...")
 t.sleep(1)
 clear()
+from sys import platform
 from savedData import *
 from datetime import date, datetime
 import datetime
@@ -159,7 +162,7 @@ def removePerson():
                 birthdaysOfPeople.remove(birthdaysOfPeople[newIndex])
                 agesOfPeople.remove(agesOfPeople[newIndex])
                 done = True
-            except:
+            except Exception:
                 if index == "c" or index == "C":
                     print("Ok. Cancelling.....")
                     done = True
@@ -194,21 +197,34 @@ def refreshAges():
         save()
         clear()
 
+def list_files(startpath):
+    for root, dirs, files in os.walk(startpath):
+        level = root.replace(startpath, '').count(os.sep)
+        indent = ' ' * 4 * (level)
+        print('{}{}/'.format(indent, os.path.basename(root)))
+        subindent = ' ' * 4 * (level + 1)
+        for f in files:
+            print('{}{}'.format(subindent, f))
 
 while quit:
     clear()
+    print('\033[94m')
     refreshAges()
+    clear()
     print("Welcome To The Name and Age Remember")
     print("Type n To put someone in")
     print("Type l to list the names")
     print("Type r to remove a name")
-    print("Type h to hack into the mainframe")
+    print("Type h to hack into the mainframe (Do control-c to stop it)")
     print("Type f to refresh the ages")
     print("Type q to quit")
     decision = input("")
     if decision == "q" or decision == "Q":
         clear()
         save()
+        print('\033[99m' + "1")
+        input
+        clear()
         print("Goodbye")
         quit = False
         exit()
@@ -232,7 +248,20 @@ while quit:
         refreshAges()
         save()
     elif decision == "h" or decision == "H":
-        print(os.system("c: & tree"))
-        t.sleep(1)
+        try:
+            print('\033[92m')
+            clear()
+            if platform == "linux" or platform == "linux2":
+                list_files("/")
+            elif platform == "darwin":
+                list_files("/")
+            else:
+                print(os.system("c: & tree"))
+            t.sleep(1)
+        except:
+            clear()
+            print('\033[94m')
+            print("HAHA fine it will stop")
+            t.sleep(2)
     else:
         clear()
