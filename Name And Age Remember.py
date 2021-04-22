@@ -256,7 +256,8 @@ while quit:
             elif platform == "darwin":
                 list_files("/")
             else:
-                print(os.system("c: & tree"))
+                os.system("c:")
+                print(os.system("tree"))
             t.sleep(1)
         except:
             clear()
