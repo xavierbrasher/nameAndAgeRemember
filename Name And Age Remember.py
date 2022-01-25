@@ -1,32 +1,38 @@
-def makeFileUsable():
+def make_file_usable():
     try:
         t = open("savedData.py", "r")
         contents = t.read()
         if contents.__contains__("namesOfPeople ="):
-            t.close
+            t.close()
         else:
-            t.close
+            t.close()
             f = open("savedData.py", "w")
             f.write("namesOfPeople = []" + "\n")
             f.write("birthdaysOfPeople = []" + "\n")
             f.write("agesOfPeople = []" + "\n")
-            f.close
+            f.close()
     except Exception:
         f = open("savedData.py", "w")
         f.write("namesOfPeople = []" + "\n")
         f.write("birthdaysOfPeople = []" + "\n")
         f.write("agesOfPeople = []" + "\n")
-        f.close
-makeFileUsable()
+        f.close()
+
+
+make_file_usable()
 
 import os
 import time as t
-from subprocess import check_call, check_output, call 
+from subprocess import check_call, check_output, call
+
+
 def clear():
     try:
         os.system('cls')
     except Exception:
         os.system('clear')
+
+
 print('\033[94m')
 clear()
 print("Loading...")
@@ -38,27 +44,28 @@ from datetime import date, datetime
 import datetime
 
 age = ""
-quit = True
 newBirthday = ""
+
 
 def save():
     f = open("savedData.py", "w")
-    f.write("namesOfPeople = "+ str(namesOfPeople) + "\n")
-    f.write("birthdaysOfPeople = "+ str(birthdaysOfPeople) + "\n")
-    f.write("agesOfPeople = "+ str(agesOfPeople) + "\n")
-    f.close
+    f.write("namesOfPeople = " + str(namesOfPeople) + "\n")
+    f.write("birthdaysOfPeople = " + str(birthdaysOfPeople) + "\n")
+    f.write("agesOfPeople = " + str(agesOfPeople) + "\n")
+    f.close()
 
 
+def make_math(birth_date_calculation):
+    today = date.today()
+    age = today.year - birth_date_calculation.year - (
+            (today.month, today.day) < (birth_date_calculation.month, birth_date_calculation.day))
+    return age
 
-def makeMath(birthDateCalculation):
-    today = date.today() 
-    age = today.year - birthDateCalculation.year - ((today.month, today.day) < (birthDateCalculation.month, birthDateCalculation.day)) 
-    return age 
-    
-def calculateAge(birthdaydate, newName):
+
+def calculate_age(birthday_date, new_name):
     newBirthday = ""
     newBirthday = ""
-    for x in birthdaydate:
+    for x in birthday_date:
         if x == "/":
             newBirthday += " "
         else:
@@ -70,12 +77,12 @@ def calculateAge(birthdaydate, newName):
         if x <= 2:
             day += newBirthday[x]
         elif x == 4:
-                month += newBirthday[x]
-                month += newBirthday[x + 1]
+            month += newBirthday[x]
+            month += newBirthday[x + 1]
         elif x >= 6:
             year += newBirthday[x]
     birthDate = datetime.datetime(int(year), int(month), int(day))
-    ageCalculationEnd = str(makeMath(birthDate))
+    ageCalculationEnd = str(make_math(birthDate))
     clear()
 
     checkageloop = True
@@ -89,8 +96,8 @@ def calculateAge(birthdaydate, newName):
             print("Cool")
             t.sleep(1)
             agesOfPeople.append(ageCalculationEnd)
-            namesOfPeople.append(newName)
-            birthdaysOfPeople.append(birthdaydate)
+            namesOfPeople.append(new_name)
+            birthdaysOfPeople.append(birthday_date)
             save()
             checkageloop = False
         elif checkBirthday == "Y":
@@ -98,8 +105,8 @@ def calculateAge(birthdaydate, newName):
             print("Cool")
             t.sleep(1)
             agesOfPeople.append(ageCalculationEnd)
-            namesOfPeople.append(newName)
-            birthdaysOfPeople.append(birthdaydate)
+            namesOfPeople.append(new_name)
+            birthdaysOfPeople.append(birthday_date)
             save()
             checkageloop = False
         elif checkBirthday == "n":
@@ -118,7 +125,7 @@ def calculateAge(birthdaydate, newName):
             t.sleep(1)
 
 
-def newPerson():
+def new_person():
     print("Type c as name if you want to cancel")
     newName = input("What is the Name: ")
     if newName == "c" or newName == "C":
@@ -129,21 +136,21 @@ def newPerson():
         newAge = input("Whats Your Birth date (DD/MM/YYYY): ")
 
         if len(newAge) == 10 and "/" in newAge:
-            calculateAge(newAge, newName)
+            calculate_age(newAge, newName)
         else:
             print("Error. Retry")
             t.sleep(2)
             clear()
-            newPerson()
+            new_person()
         clear()
 
 
-
-def listPeople():
+def list_people():
     for x in range(len(namesOfPeople)):
-        print(str(x+1)+". Name: " + namesOfPeople[x] + ". Age: " + agesOfPeople[x] + ".")
+        print(str(x + 1) + ". Name: " + namesOfPeople[x] + ". Age: " + agesOfPeople[x] + ".")
 
-def removePerson():
+
+def remove_person():
     done = False
     newIndex = 0
     while done == False:
@@ -154,10 +161,10 @@ def removePerson():
             clear()
         else:
             print("Which one do you want to remove? From 1 to " + str(len(namesOfPeople)) + " (type c to cancel)")
-            listPeople()
+            list_people()
             index = input()
             try:
-                newIndex = int(index)-1
+                newIndex = int(index) - 1
                 namesOfPeople.remove(namesOfPeople[newIndex])
                 birthdaysOfPeople.remove(birthdaysOfPeople[newIndex])
                 agesOfPeople.remove(agesOfPeople[newIndex])
@@ -171,7 +178,8 @@ def removePerson():
                     t.sleep(1)
                     clear()
 
-def refreshAges():
+
+def refresh_ages():
     for i in birthdaysOfPeople:
         newBirthday = ""
         for x in i:
@@ -191,78 +199,85 @@ def refreshAges():
             elif x >= 6:
                 year += newBirthday[x]
         birthDate = datetime.datetime(int(year), int(month), int(day))
-        ageCalculationEnd = str(makeMath(birthDate))
+        ageCalculationEnd = str(make_math(birthDate))
         indexInAges = birthdaysOfPeople.index(i)
         agesOfPeople[indexInAges] = ageCalculationEnd
         save()
         clear()
 
-def list_files(startpath):
-    for root, dirs, files in os.walk(startpath):
-        level = root.replace(startpath, '').count(os.sep)
+
+def list_files(start_path):
+    for root, dirs, files in os.walk(start_path):
+        level = root.replace(start_path, '').count(os.sep)
         indent = ' ' * 4 * (level)
         print('{}{}/'.format(indent, os.path.basename(root)))
         subindent = ' ' * 4 * (level + 1)
         for f in files:
             print('{}{}'.format(subindent, f))
 
-while quit:
-    clear()
-    print('\033[94m')
-    refreshAges()
-    clear()
-    print("Welcome To The Name and Age Remember")
-    print("Type n To put someone in")
-    print("Type l to list the names")
-    print("Type r to remove a name")
-    print("Type h to hack into the mainframe (Do control-c to stop it)")
-    print("Type f to refresh the ages")
-    print("Type q to quit")
-    decision = input("")
-    if decision == "q" or decision == "Q":
+
+def main():
+    running = True
+    while running:
         clear()
-        save()
-        print('\033[99m' + "1")
-        input
+        print('\033[94m')
+        refresh_ages()
         clear()
-        print("Goodbye")
-        quit = False
-        exit()
-    elif decision == "n" or decision == "N":
-        clear()
-        newPerson()
-    elif decision == "r" or decision == "R":
-        clear()
-        removePerson()
-        save()
-        clear()
-    elif decision == "l" or decision == "L":
-        clear()
-        print("Press enter to continue")
-        listPeople()
-        input()
-        save()
-        clear()
-    elif decision == "f" or decision == "F":
-        clear()
-        refreshAges()
-        save()
-    elif decision == "h" or decision == "H":
-        try:
-            print('\033[92m')
+        print("Welcome To The Name and Age Remember")
+        print("Type n To put someone in")
+        print("Type l to list the names")
+        print("Type r to remove a name")
+        print("Type h to hack into the mainframe (Do control-c to stop it)")
+        print("Type f to refresh the ages")
+        print("Type q to quit")
+        decision = input("")
+        if decision == "q" or decision == "Q":
             clear()
-            if platform == "linux" or platform == "linux2":
-                list_files("/")
-            elif platform == "darwin":
-                list_files("/")
-            else:
-                os.system("c:")
-                print(os.system("tree"))
-            t.sleep(1)
-        except:
+            save()
+            print('\033[99m' + "1")
             clear()
-            print('\033[94m')
-            print("HAHA fine it will stop")
-            t.sleep(2)
-    else:
-        clear()
+            print("Goodbye")
+            running = False
+            exit()
+        elif decision == "n" or decision == "N":
+            clear()
+            new_person()
+        elif decision == "r" or decision == "R":
+            clear()
+            remove_person()
+            save()
+            clear()
+        elif decision == "l" or decision == "L":
+            clear()
+            print("Press enter to continue")
+            list_people()
+            input()
+            save()
+            clear()
+        elif decision == "f" or decision == "F":
+            clear()
+            refresh_ages()
+            save()
+        elif decision == "h" or decision == "H":
+            try:
+                print('\033[92m')
+                clear()
+                if platform == "linux" or platform == "linux2":
+                    list_files("/")
+                elif platform == "darwin":
+                    list_files("/")
+                else:
+                    os.system("c:")
+                    print(os.system("tree"))
+                t.sleep(1)
+            except:
+                clear()
+                print('\033[94m')
+                print("HAHA fine it will stop")
+                t.sleep(2)
+        else:
+            clear()
+
+
+if __name__ == "__main__":
+    main()
